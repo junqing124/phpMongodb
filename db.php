@@ -101,16 +101,25 @@ function change_page_list_num()
 			{
 				foreach( $co_list as $co_info )
 				{
-					$co_detail = $cls_db->execute("return db.{$co_info->getName()}.stats()");
-					$co_count = $co_detail['retval']['count'];
-					//p_r( $co_detail );
-					//exit;
-					$co_mb_size = round( $co_detail["retval"]["storageSize"] / 1024 / 1024, 2) . "MB";
+					if( $show_detail )
+					{
+						$co_count_detail = $cls_db->execute("return db.{$co_info->getName()}.stats().count");
+						$co_storage_size_detail = $cls_db->execute("return db.{$co_info->getName()}.stats().storageSize");
+						/*p_r( $co_detail );
+                        $co_detail = $cls_db->execute("return db.{$co_info->getName()}.stats().storageSize");
+                        p_r( $co_detail );
+                        exit;*/
+						$co_count = $co_count_detail['retval'];
+						//p_r( $co_detail );
+						//exit;
+						$co_mb_size = round( $co_storage_size_detail["retval"] / 1024 / 1024, 2) . "MB";
+						$detail_str = "[{$co_count}->{$co_mb_size}]";
+					}
 		?>
       <div class="collection_list">
         <table border="0" cellpadding="0" cellspacing="0">
           <tr>
-            <td valign="top"><a href="db.php?db_name=<?php echo $db_name; ?>&collection=<?php echo $co_info->getName(); ?>"><?php echo $co_info->getName(); ?>[<?php echo $co_count; ?>-><?php echo $co_mb_size; ?>]</a></td>
+            <td valign="top"><a href="db.php?db_name=<?php echo $db_name; ?>&collection=<?php echo $co_info->getName(); ?>"><?php echo $co_info->getName(); ?><?php echo $detail_str; ?></a></td>
             <td valign="top"><a href="db.php?db_name=<?php echo $db_name; ?>&collection=<?php echo $co_info->getName(); ?>"><img valign='bottom' src='skin/images/frame/addnews.gif' alt='浏览集合' title='浏览集合' align="bottom"/></a></td>
             <td valign="top"><a onClick="return confirm( '您确定要删除[<?php echo $co_info->getName(); ?>]' )" href="javascript:remove_collection('<?php echo $db_name; ?>','<?php echo $co_info->getName(); ?>');void(0);"><img src='skin/images/frame/gtk-del.png' alt='删除集合' title='删除集合' valign='bottom' /></a></td>
           </tr>

@@ -41,8 +41,7 @@
 			?>
             <li>
               <div class='items'>
-                <div class='fllct'><a href='db.php?db_name=<?php echo urlencode( $db_info['name'] ); ?>' target='main'><?php echo $db_info['name']; ?></a></div>
-                <div class='flrct'><a onClick="return confirm( '您确定要删除[<?php echo $db_info['name']; ?>]' )" href="javascript:remove_db('<?php echo $db_info['name']; ?>');void(0);"><img src='skin/images/frame/gtk-del.png' alt='删除数据库' title='删除数据库'/></a> </div>
+                <div class='fllct'><a href='db.php?db_name=<?php echo urlencode( $db_info['name'] ); ?>' target='main'><?php echo $db_info['name']; ?></a><span style="float: right"><a href='db.php?db_name=<?php echo urlencode( $db_info['name'] ); ?>&show_detail=1' target='main'><img src='skin/images/frame/book1.gif' alt='详细数据' title='详细数据'/></a><a onClick="return confirm( '您确定要删除[<?php echo $db_info['name']; ?>]' )" href="javascript:remove_db('<?php echo $db_info['name']; ?>');void(0);"><img src='skin/images/frame/gtk-del.png' alt='删除数据库' title='删除数据库'/></a> </span></div>
               </div>
             </li>
             <?php
