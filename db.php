@@ -2,11 +2,20 @@
 	require_once( "include/common.inc.php" );
 	ini_set('mongo.long_as_object', 1);
 	//ini_set('mongo.native_long', 1);
-	$page_start_time = microtime();	
-	$url = $_SERVER['SERVER_NAME'] . $_SERVER["REQUEST_URI"];
+	$page_start_time = microtime();
+
+	$url = $_SERVER['HTTP_HOST'] . $_SERVER["REQUEST_URI"];
 	$url_option = array();
 	$parse_url = parse_url($url);
-	$url_main = 'http://' . $parse_url['path'];
+
+	if( ! empty( $_SERVER["SERVER_PORT"] ) )
+	{
+		$url_main = 'http://' . $parse_url['host'] . ':' . $parse_url['port'] . $parse_url['path'];
+	} else
+	{
+		$url_main = 'http://' . $parse_url['path'];
+	}
+	//$url_main = 'http://' . $parse_url['path'];
 	$search_num = 3;
 	if($parse_url['query'])
 	{
